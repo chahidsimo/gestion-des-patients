@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http:/www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:sec="https://www.thymleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorator="template1"
+     >
+<head>
+<meta charset="utf-8">
+<title>Doctors List</title>
+
+</head>
+ <body>
+ <div layout:fragment="pageContent">
+  
+  <div class="container mt-5"> 
+  <div class="card">
+   <div class="card-header">Doctors List</div>
+   <div class="card-body">
+     <form method="get" th:action="@{doctors}"> 
+       <div class="form-group">
+        <label>Name</label>
+         <input type="text" name="keyword" th:value="${keyword}">
+         <button class="btn btn-outline-success">Search</button>
+       </div>
+       </form>
+   <table class="table">
+     <tr>
+      <th>ID</th><th>Name</th><th>Last name</th><th>Profession</th><th>Practicing from</th>
+    </tr>
+     <tr th:each="d:${doctors}">
+     <td th:text="${d.id}"></td>
+     <td th:text="${d.name}"></td>
+     <td th:text="${d.lastname}"></td>
+     <td th:text="${d.profession}"></td>
+      <td th:text="${d.practicing_from}"></td>
+     <td sec:authorize="hasRole('ROLE_ADMIN')">
+     <a  onclick="return confirm('etes vous sure de vouloir supprimer?')" 
+     class="btn btn-outline-danger" th:href="@{deleteDoctor(id=${d.id},keyword=${keyword},page=${currentPage},size=${size})}">Delete</a>
+     </td>
+      <td sec:authorize="hasRole('ROLE_ADMIN')">
+       <a class="btn btn-outline-warning" th:href="@{editDoctor(id=${d.id})}">Edit</a>
+      </td>  
+     </tr>
+  </table>
+       <ul class="nav nav-pills">
+        <li  th:each="page,status:${pages}">
+         <a th:class="${status.index==currentPage?'btn btn-primary':'btn'}" th:href="@{doctors(page=${status.index},keyword=${keyword},size=${size})}" th:text="${status.index}">
+            </a>
+        </li>
+       </ul>
+   
+   </div>
+  </div>
+  </div>
+ </div>
+
+
+</body>
+</html>

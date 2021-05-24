@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http:/www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:sec="https://www.thymleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorator="template1"
+     >
+<head>
+<meta charset="utf-8">
+<title>Page Patients</title>
+</head>
+<body>
+ <div layout:fragment="pageContent">
+    <div class= "container mt-5">
+    <div class="col-md-6">
+       <div class="card">
+       <div class="card-header">Authentication</div>
+       <div class="card-body ">
+          <div th:if="${param.error}" class="text-warning m-1">Bad credentials</div>
+        <form th:action="@{login}" method="post">
+          <div class="for;-group">
+           <label class="control-label">Username</label>
+            <input type="text" name="username">
+          </div>
+         
+         <div class="for;-group">
+           <label class="control-label">Password</label>
+            <input type="text" name="password">
+          </div>
+          <button class="btn btn-outline-primary" >Login</button>
+         </form>       
+       </div>
+    </div>
+  
+    </div>
+    
+    </div>
+    
+    
+    
+</div>
+   
+  
+  
+  
+</body>
+</html>
